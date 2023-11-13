@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">FreeMilt</string>
-    <string name="back_button">Kembali</string>
-    <string name="confirm">Konfirmasi</string>
-    <string name="next">Lanjut</string>
-    <string name="cancel">Batal</string>
+    <string name="back_button">Back</string>
+    <string name="confirm">Confirm</string>
+    <string name="next">Next</string>
+    <string name="cancel">Cancel</string>
     <string name="ori">Original</string>
     <string name="vanilla">Vanilla</string>
     <string name="macha">Macha</string>

@@ -64,6 +64,7 @@ fun SummaryPage(
                     Text(text = item.second.toString(), fontWeight = FontWeight.Bold)
                 }
                 Divider(thickness = dimensionResource(id = R.dimen.thickness_divider))
+                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_medium)))
             }
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             FormatLabelHarga(subtotal = OrderUIState.harga , modifier = Modifier.align(Alignment.Start))
