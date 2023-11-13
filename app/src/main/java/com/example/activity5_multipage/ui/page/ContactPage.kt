@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,11 +23,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.activity5_multipage.R
+import com.example.activity5_multipage.data.OrderUIState
 import com.example.activity5_multipage.ui.theme.Activity5_multipageTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactPage(onSubmitButtonClicked: (MutableList<String>) -> Unit){
+fun ContactPage(
+    onSubmitButtonClicked: (MutableList<String>) -> Unit,
+    onNextButtonCliked: () -> Unit,
+    onBackButtonCliked: () -> Unit
+    ){
 
     var namaTxt by remember{ mutableStateOf("") }
     var alamatTxt by remember{ mutableStateOf("") }
@@ -71,15 +77,19 @@ fun ContactPage(onSubmitButtonClicked: (MutableList<String>) -> Unit){
             horizontalArrangement = Arrangement.spacedBy(dimensionResource(R.dimen.padding_medium)),
             verticalAlignment = Alignment.Bottom
         ) {
-
+            OutlinedButton(
+                modifier = Modifier.weight(1f),
+                onClick = onBackButtonCliked
+            ) {
+                Text(stringResource(id = R.string.back_button))
+            }
+            Button(
+                modifier = Modifier.weight(1f),
+                onClick = onNextButtonCliked
+            ) {
+                Text(stringResource(id = R.string.next))
+            }
         }
     }
 }
 
-@Preview (showBackground = true)
-@Composable
-fun preview(){
-    Activity5_multipageTheme {
-        ContactPage { }
-    }
-}
