@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -25,8 +26,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.activity5_multipage.R
 import com.example.activity5_multipage.data.SumberData.varian
 
+
 enum class PengelolaHalaman {
     Home,
+    Contact,
     Varian,
     Summary
 }
@@ -43,10 +46,12 @@ fun ThaiTeaAppBar(
         modifier = modifier,
         navigationIcon = {
             if (bisaNavigasiBack) {
-                Icon(
-                    imageVector = Icons.Filled.ArrowBack, 
-                    contentDescription = stringResource(id = R.string.back_button)
-                )
+                IconButton(onClick = navigasiUp) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = stringResource(id = R.string.back_button)
+                    )
+                }
             }
         }
     )
@@ -60,21 +65,31 @@ fun ThaiTeaApp(
 ){
     Scaffold(
         topBar = {
-            ThaiTeaAppBar(bisaNavigasiBack = false, navigasiUp = { /*TODO: implement back navigation*/ })
+            ThaiTeaAppBar(bisaNavigasiBack = false, navigasiUp = {  })
         }
     ) { innerPadding ->
         val uiState by viewModel.stateUI.collectAsState()
+
         NavHost(
             navController = navController, 
             startDestination = PengelolaHalaman.Home.name, 
             modifier = Modifier.padding(innerPadding)
-        )
-        {
+        ) {
+
             composable(route = PengelolaHalaman.Home.name){
                 HomePage (
-                    onNextButtonClicked = {navController.navigate(PengelolaHalaman.Varian.name) }
+                    onNextButtonClicked = {navController.navigate(PengelolaHalaman.Contact.name) }
                 )
             }
+
+            composable(route = PengelolaHalaman.Contact.name){
+                ContactPage(
+                    onSubmitButtonClicked = { viewModel.setContact(it) },
+                    onNextButtonCliked = { navController.navigate(PengelolaHalaman.Varian.name)},
+                    onBackButtonCliked = { cancelOrderAndNavigateToHome(viewModel,navController)}
+                )
+            }
+
             composable(route = PengelolaHalaman.Varian.name){
                 val context = LocalContext.current
                 VarianPage(
@@ -82,11 +97,11 @@ fun ThaiTeaApp(
                     onSelectionChanged = {viewModel.setVarian(it)},
                     onConfirmButtonClicked = {viewModel.setJumlah(it)},
                     onNextButtonClicked = { navController.navigate(PengelolaHalaman.Summary.name)},
-                    onCancelButtonClicked = { cancelOrderAndNavigateToHome(viewModel, navController)}
+                    onCancelButtonClicked = { cancelOrderAndNavigateToContact(viewModel, navController) }
                 )
             }
             composable(route = PengelolaHalaman.Summary.name){
-                SummaryPage(orderUIState = uiState, onCancelButtonClicked = { cancelOrderAndNavigateToVarian(navController)}
+                SummaryPage(OrderUIState = uiState, onCancelButtonClicked = { cancelOrderAndNavigateToVarian(viewModel, navController)}
                     //onSendButtonClicked = {subject: String, summary: String)
                 )
             }
@@ -102,8 +117,18 @@ private fun cancelOrderAndNavigateToHome(
     navController.popBackStack(PengelolaHalaman.Home.name, inclusive = false)
 }
 
-private fun cancelOrderAndNavigateToVarian(
+private fun cancelOrderAndNavigateToContact(
+    viewModel: OrderViewModel,
     navController: NavHostController
 ){
+   viewModel.resetOrder()
+    navController.popBackStack(PengelolaHalaman.Contact.name, inclusive = false)
+}
+
+private fun cancelOrderAndNavigateToVarian(
+    viewModel: OrderViewModel,
+    navController: NavHostController
+){
+    viewModel.resetOrder()
     navController.popBackStack(PengelolaHalaman.Varian.name, inclusive = false)
 }
