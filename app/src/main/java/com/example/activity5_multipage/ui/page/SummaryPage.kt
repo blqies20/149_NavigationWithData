@@ -18,25 +18,43 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.activity5_multipage.R
 import com.example.activity5_multipage.data.OrderUIState
 import com.example.activity5_multipage.ui.komponen.FormatLabelHarga
 
 @Composable
 fun SummaryPage(
-    orderUIState: OrderUIState,
-    onCancelButtonClicked: ()->Unit,
+    OrderUIState: OrderUIState,
+    onCancelButtonClicked: ()-> Unit,
     //onSendButtonClicked: (String, String) -> Unit,
     modifier: Modifier = Modifier
 ){
     val items = listOf(
-        Pair(stringResource(R.string.quantity), orderUIState.jumlah),
-        Pair(stringResource(R.string.varian), orderUIState.varian)
+        Pair(stringResource(R.string.quantity), OrderUIState.jumlah),
+        Pair(stringResource(R.string.varian), OrderUIState.varian)
     )
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+
+        Text(text = stringResource(R.string.nama))
+        Text(text = OrderUIState.nama)
+        Divider()
+        Spacer(modifier = Modifier.padding(16.dp))
+
+        Text(text = stringResource(id = R.string.alamat))
+        Text(text = OrderUIState.alamat)
+        Divider()
+        Spacer(modifier = Modifier.padding(16.dp))
+
+        Text(text = stringResource(id = R.string.tlp))
+        Text(text = OrderUIState.tlp)
+        Divider()
+        Spacer(modifier = Modifier.padding(16.dp))
+
         Column(
             modifier = Modifier.padding(dimensionResource(R.dimen.padding_small))
         ) {
@@ -48,7 +66,7 @@ fun SummaryPage(
                 Divider(thickness = dimensionResource(id = R.dimen.thickness_divider))
             }
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
-            FormatLabelHarga(subtotal = orderUIState.harga , modifier = Modifier.align(Alignment.Start))
+            FormatLabelHarga(subtotal = OrderUIState.harga , modifier = Modifier.align(Alignment.Start))
         }
         Row(
             modifier = Modifier
@@ -75,6 +93,8 @@ fun SummaryPage(
     }
 }
 
+
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewSummaryPage() {
@@ -85,9 +105,8 @@ fun PreviewSummaryPage() {
         harga = "15.90"
     )
 
-
     SummaryPage(
-            orderUIState = OrderUIState,
+            OrderUIState = OrderUIState,
             onCancelButtonClicked = { /* Handle cancel button click */ }
     )
 
