@@ -19,5 +19,6 @@
     <string name="nama">Nama</string>
     <string name="alamat">Alamat</string>
     <string name="tlp">Telepon</string>
+    <string name="btn_submit">Submit</string>
 
 </resources>
