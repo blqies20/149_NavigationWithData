@@ -31,7 +31,6 @@ import com.example.activity5_multipage.ui.theme.Activity5_multipageTheme
 @Composable
 fun ContactPage(
     onSubmitButtonClicked: (MutableList<String>) -> Unit,
-    onNextButtonCliked: () -> Unit,
     onBackButtonCliked: () -> Unit
     ){
 
@@ -69,9 +68,6 @@ fun ContactPage(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Button(onClick = { onSubmitButtonClicked(listData) } ) {
-            Text(text = stringResource(id = R.string.btn_submit))
-        }
 
         Row(
             modifier = Modifier.padding(dimensionResource(id = R.dimen.padding_medium)),
@@ -86,7 +82,7 @@ fun ContactPage(
             }
             Button(
                 modifier = Modifier.weight(1f),
-                onClick = onNextButtonCliked
+                onClick = {onSubmitButtonClicked(listData)}
             ) {
                 Text(stringResource(id = R.string.next))
             }

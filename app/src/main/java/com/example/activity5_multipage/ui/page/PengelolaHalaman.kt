@@ -84,8 +84,11 @@ fun ThaiTeaApp(
 
             composable(route = PengelolaHalaman.Contact.name){
                 ContactPage(
-                    onSubmitButtonClicked = { viewModel.setContact(it) },
-                    onNextButtonCliked = { navController.navigate(PengelolaHalaman.Varian.name)},
+                    onSubmitButtonClicked = {
+                        viewModel.setContact(it)
+                        navController.navigate(PengelolaHalaman.Varian.name)
+                                            },
+
                     onBackButtonCliked = { cancelOrderAndNavigateToHome(viewModel,navController)}
                 )
             }
